@@ -11,18 +11,21 @@ const Book = () => {
             <div className="col-lg-8">
                 <p className='border-bottom mb-3 pb-2'>مشخصات کتاب با شناسه {book.number}:</p>
                 <table className='table'>
-                    <tr>
-                        <td>نام کتاب:</td>
-                        <td>{book.name}</td>
-                    </tr>
-                    <tr>
-                        <td> تاریخ انتشار:</td>
-                        <td>{book.due}</td>
-                    </tr>
-                    <tr>
-                        <td>قیمت کتاب:</td>
-                        <td>{book.amount}</td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td>نام کتاب:</td>
+                            <td>{book.name}</td>
+                        </tr>
+                        <tr>
+                            <td> تاریخ انتشار:</td>
+                            <td>{book.due}</td>
+                        </tr>
+                        <tr>
+                            <td>قیمت کتاب:</td>
+                            <td>{book.amount}</td>
+                        </tr>
+                    </tbody>
+
                 </table>
             </div>
         )
