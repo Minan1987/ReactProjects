@@ -1,9 +1,11 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
-import { getBook } from '../data/data'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { getBook, deleteBook } from '../data/data'
 
 const Book = () => {
     const params = useParams()
+    const navigate = useNavigate()
+    const location = useLocation()
     console.log(params)
     const book = getBook(parseInt(params.bookId))
     if (book) {
@@ -23,6 +25,16 @@ const Book = () => {
                         <tr>
                             <td>قیمت کتاب:</td>
                             <td>{book.amount}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button className='btn btn-primary '
+                                    onClick={() => {
+                                        deleteBook(book.number)
+                                        navigate("/books" + location.search)
+                                    }}>حذف کتاب</button>
+                            </td>
                         </tr>
                     </tbody>
 

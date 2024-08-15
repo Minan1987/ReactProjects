@@ -1,4 +1,4 @@
-const books = [
+let books = [
     {
         number: 1,
         name: "مخزن الاسرار",
@@ -23,12 +23,20 @@ const books = [
         amount: "56000",
         due: "1377/02/13"
     },
-
+    {
+        number: 5,
+        name: "بازی زندگی",
+        amount: "56000",
+        due: "1377/02/13"
+    },
 ]
 
 export const getBooks = () => {
     return books;
 }
-export const getBook = (number) =>{
+export const getBook = (number) => {
     return books.find(book => book.number === number)
+}
+export const deleteBook = number => {
+    books = books.filter(book => book.number !== number)
 }
