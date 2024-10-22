@@ -4,6 +4,7 @@ import Spinner from '../Spinner';
 import Contact from './Contact'
 import notFound from '../../../public/images/no-found.gif'
 import { PINK } from '../../helpers/colors';
+import { Link } from 'react-router-dom';
 
 const Contacts = ({ loading, contacts }) => {
   return (
@@ -13,7 +14,7 @@ const Contacts = ({ loading, contacts }) => {
           <div className="row">
             <div className="col">
               <p className="h3 text-center my-3">
-                <button className='btn' style={{ backgroundColor: PINK }}>ساخت مخاطب جدید <FiPlusSquare /></button>
+                <Link to="/contacts/add" className='btn' style={{ backgroundColor: PINK }}>ساخت مخاطب جدید <FiPlusSquare /></Link>
               </p>
             </div>
           </div>
