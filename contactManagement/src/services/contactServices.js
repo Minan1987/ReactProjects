@@ -8,7 +8,7 @@ export const getAllContacts = () => {
 }
 
 export const getContact = (contactId) => {
-    const url = `${SERVER_URL}/contact/${contactId}`
+    const url = `${SERVER_URL}/contacts/${contactId}`
     return axios.get(url)
 }
 
@@ -16,6 +16,11 @@ export const getAllGroups = () => {
     const url = `${SERVER_URL}/groups`
     return axios.get(url)
 }
+
+ export const getGroup = (groupId) => {
+    const url = `${SERVER_URL}/groups/${groupId}`
+    return axios.get(url)
+ }
 
 export const createContact = (contact) => {
     const url = `${SERVER_URL}/contacts`

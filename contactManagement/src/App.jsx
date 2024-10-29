@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom"
-import { Navbar, Contact, Contacts, AddContact, EditContact, ViewContact } from './components'
-import { createContact, getAllContacts, getAllGroups } from './services/contactServices'
+import { Navbar, Contacts, AddContact, EditContact, ViewContact } from './components'
+import { createContact, getAllContacts, getAllGroups, getGroup } from './services/contactServices'
 
 const App = () => {
+  const [forceRender, setForceRender] = useState(false)
   const [loading, setLoading] = useState(false)
   const [getContacts, setContacts] = useState([])
   const [getGroups, setGroups] = useState([])
@@ -34,11 +35,29 @@ const App = () => {
     fetchData()
   }, [])
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        const { data: contactsData } = await getAllContacts()
+        const { data: groupsData } = await getAllGroups()
+        setContacts(contactsData)
+        setGroups(groupsData)
+        setLoading(false)
+      } catch (err) {
+        console.log(err.message)
+        setLoading(false)
+      }
+    }
+    fetchData()
+  },[forceRender])
+
   const createContactForm = async (event) => {
     event.preventDefault()
     try {
       const {status} = await createContact(getContact)
       setContact({})
+      setForceRender(!forceRender)
       navigate("/contacts")
       
     } catch (err) {
@@ -67,7 +86,7 @@ const App = () => {
             createContactForm={createContactForm}
           />
         } />
-        <Route path="/contacts/:contactId" element={<Contact />} />
+        <Route path="/contacts/:contactId" element={<ViewContact loading={loading} contact={getContact} group={getGroup} />} />
         <Route path="/contacts/edit/:contactId" element={<EditContact />} />
       </Routes>
     </div>

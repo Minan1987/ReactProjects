@@ -3,6 +3,7 @@ import { CURRENTLINE, CYAN, ORANGE, RED } from "../../helpers/colors";
 import { FaRegEye } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
+import { Link } from 'react-router-dom';
 
 const Contact = ({contact}) => {
   return (
@@ -27,7 +28,7 @@ const Contact = ({contact}) => {
               </ul>
             </div>
             <div className="col-sm-1 d-flex flex-column align-items-center">
-              <button className='btn my-1' style={{ backgroundColor: ORANGE }}><FaRegEye /></button>
+              <Link to={`/contacts/${contact.id}`} className='btn my-1' style={{ backgroundColor: ORANGE }}><FaRegEye /></Link>
               <button className='btn my-1' style={{ backgroundColor: CYAN }}><FaPencil /></button>
               <button className='btn my-1' style={{ backgroundColor: RED }}><MdDelete /></button>
             </div>
