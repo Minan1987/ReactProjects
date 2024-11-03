@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { CURRENTLINE } from "../../helpers/colors";
 import { Link, useParams } from 'react-router-dom';
 import { getContact, getGroup } from '../../services/contactServices';
+import Spinner from '../Spinner';
 
 const ViewContact = () => {
   const { contactId } = useParams()
@@ -23,8 +24,8 @@ const ViewContact = () => {
       }
     }
     fetchData()
-  },[])
-  const{loading, group, contact}= state
+  }, [])
+  const { loading, group, contact } = state
   return (
     <div className='row justify-content-center'>
       <div className="col-md-8 ">
@@ -32,28 +33,37 @@ const ViewContact = () => {
           <div className="card-body">
             <div className="row justify-content-around align-items-center">
               <h3 className='text-light'>اطلاعات کاربر:</h3>
-              <div className="col-sm-4">
-                <img src={contact.photo} alt={contact.fullname} className='rounded-2' />
-              </div>
-              <div className="col-sm-8">
-                <ul className='list-group pe-2'>
-                  <li className='list-group-item list-group-item-dark'>
-                    نام و نام خانوادگی: {" "} <span className='fw-bold'>{contact.fullname}</span>
-                  </li>
-                  <li className='list-group-item list-group-item-dark'>
-                    شماره تماس: {" "} <span className='fw-bold'>{contact.mobile}</span>
-                  </li>
-                  <li className='list-group-item list-group-item-dark'>
-                    آدرس ایمیل: {" "} <span className='fw-bold'>{contact.email}</span>
-                  </li>
-                  <li className='list-group-item list-group-item-dark'>
-                    شغل: {" "} <span className='fw-bold'>{contact.job}</span>
-                  </li>
-                  <li className='list-group-item list-group-item-dark'>
-                    گروه: {" "} <span className='fw-bold'>{contact.group}</span>
-                  </li>
-                </ul>
-              </div>
+              {loading ? (<Spinner />) : (
+                <>
+                  {Object.keys(contact).length > 0 &&
+                    <>
+                      <div className="col-sm-3">
+                        <img src={contact.photo} alt={contact.fullname} className='rounded-2' />
+                      </div>
+                      <div className="col-sm-9">
+                        <ul className='list-group pe-2'>
+                          <li className='list-group-item list-group-item-dark'>
+                            نام و نام خانوادگی: {" "} <span className='fw-bold'>{contact.fullname}</span>
+                          </li>
+                          <li className='list-group-item list-group-item-dark'>
+                            شماره تماس: {" "} <span className='fw-bold'>{contact.mobile}</span>
+                          </li>
+                          <li className='list-group-item list-group-item-dark'>
+                            آدرس ایمیل: {" "} <span className='fw-bold'>{contact.email}</span>
+                          </li>
+                          <li className='list-group-item list-group-item-dark'>
+                            شغل: {" "} <span className='fw-bold'>{contact.job}</span>
+                          </li>
+                          <li className='list-group-item list-group-item-dark'>
+                            گروه: {" "} <span className='fw-bold'>{contact.group}</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </>
+                  }
+                </>
+              )}
+
             </div>
           </div>
         </div>

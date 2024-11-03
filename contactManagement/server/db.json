@@ -1,12 +1,20 @@
 {
   "contacts": [
     {
-      "fullname": "مینا نظری",
+      "fullname": [
+        "مینا نظری"
+      ],
       "photo": "https://placehold.co/200x200",
-      "mobile": "09124548361",
-      "email": "mina.nazary66@gmail.com",
+      "mobile": [
+        "09124548363"
+      ],
+      "email": [
+        "mina.nazari@gmail.com"
+      ],
       "job": "Front-end Developer",
-      "group": "1",
+      "group": [
+        "2"
+      ],
       "id": 1
     },
     {

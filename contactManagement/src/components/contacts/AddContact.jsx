@@ -6,7 +6,7 @@ const AddContact = ({ contact, setContactInfo, groups, createContactForm }) => {
   return (
     <div className='container'>
       <div className="row">
-        <div className="col-md-6 d-flex justify-content-center align-items-center">
+        <div className="col-md-6">
           <form onSubmit={createContactForm} className='form-group my-5'>
             <input className='form-control'
               placeholder='نام و نام خانوادگی'
@@ -16,8 +16,8 @@ const AddContact = ({ contact, setContactInfo, groups, createContactForm }) => {
               onChange={setContactInfo}
               required={true}
             />
-            <input className='form-control-file mt-2'
-              type='file'
+            <input className='form-control mt-2'
+              type='text'
               name='photo'
               value={contact.photo}
               onChange={setContactInfo}
@@ -56,7 +56,7 @@ const AddContact = ({ contact, setContactInfo, groups, createContactForm }) => {
               <option>انتخاب گروه</option>
               {
                 groups.length > 0 && groups.map((group) => (
-                  <option key="group.id" value="group.id">{group.name}</option>
+                  <option key={group.id} value={group.id}>{group.name}</option>
                 )
                 )
               }
@@ -71,7 +71,7 @@ const AddContact = ({ contact, setContactInfo, groups, createContactForm }) => {
           </form>
 
         </div>
-        <div className="col-6">
+        <div className="col-md-6">
           <img src={img} alt="" width="100%" />
         </div>
       </div>
