@@ -4,7 +4,7 @@ import { getContact, getAllGroups, updateContact } from '../../services/contactS
 import Spinner from '../Spinner';
 import img from "../../../public/images/add-contact-img.png"
 
-const EditContact = () => {
+const EditContact = ({forceRender, setForceRender}) => {
   const { contactId } = useParams()
   const navigate = useNavigate()
   const [state, setState] = useState({
@@ -47,6 +47,7 @@ const EditContact = () => {
       const { data } = await updateContact(state.contact, contactId)
       setState({ ...state, loading: false });
       if (data) {
+        setForceRender(!forceRender)
         navigate("/contacts")
       }
     } catch (err) {

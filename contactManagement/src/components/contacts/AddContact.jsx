@@ -17,6 +17,7 @@ const AddContact = ({ contact, setContactInfo, groups, createContactForm }) => {
               required={true}
             />
             <input className='form-control mt-2'
+            placeholder='عکس'
               type='text'
               name='photo'
               value={contact.photo}

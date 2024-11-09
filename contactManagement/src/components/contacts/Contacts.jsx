@@ -6,7 +6,7 @@ import notFound from '../../../public/images/no-found.gif'
 import { PINK } from '../../helpers/colors';
 import { Link } from 'react-router-dom';
 
-const Contacts = ({ loading, contacts }) => {
+const Contacts = ({ loading, contacts, confirmDelete }) => {
   return (
     <>
       <section className='container' >
@@ -24,7 +24,13 @@ const Contacts = ({ loading, contacts }) => {
         <section className="container">
           <div className="row">
             {contacts.length > 0 ?
-              contacts.map(c => (<Contact  key={c.id} contact={c}/>)) 
+              contacts.map(c => (
+                <Contact
+                  key={c.id}
+                  confirmDelete={() => confirmDelete(c.id, c.fullname)}
+                  contact={c} 
+                />
+              ))
               :
               <div className='text-center'>
                 <p>مخاطب یافت نشد!</p>

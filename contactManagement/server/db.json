@@ -1,32 +1,6 @@
 {
   "contacts": [
     {
-      "fullname": [
-        "مینا نظری"
-      ],
-      "photo": "https://placehold.co/200x200",
-      "mobile": [
-        "09124548363"
-      ],
-      "email": [
-        "mina.nazari@gmail.com"
-      ],
-      "job": "Front-end Developer",
-      "group": [
-        "2"
-      ],
-      "id": 1
-    },
-    {
-      "fullname": "صادق نجومی ",
-      "photo": "https://placehold.co/200x200",
-      "mobile": "09121122330",
-      "email": "sadegh.n@gmail.com",
-      "job": "Back-end Developer",
-      "group": "1",
-      "id": 2
-    },
-    {
       "fullname": "مهران عزیزی",
       "photo": "https://placehold.co/200x200",
       "mobile": "09128865432",
@@ -43,6 +17,15 @@
       "job": "پزشک",
       "group": "3",
       "id": 4
+    },
+    {
+      "fullname": "مینا نظری",
+      "photo": "https://placehold.co/200x200",
+      "mobile": "09124548361",
+      "email": "mina.nazary66@gmail.com",
+      "job": "مهندس نرم افزار",
+      "group": "1",
+      "id": 5
     }
   ],
   "groups": [
