@@ -12,7 +12,7 @@ const Contact = ({contact, confirmDelete}) => {
         <div className="card-body">
           <div className="row justify-content-around align-items-center">
             <div className="col-sm-4">
-              <img src={contact.photo} alt={contact.fullname} className='rounded-2' />
+              <img src={contact.photo} alt={contact.fullname} className='rounded-2 w-100' />
             </div>
             <div className="col-sm-7">
               <ul className='list-group pe-2'>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CURRENTLINE } from "../../helpers/colors";
+import { CURRENTLINE, CYAN } from "../../helpers/colors";
 import { Link, useParams } from 'react-router-dom';
 import { getContact, getGroup } from '../../services/contactServices';
 import Spinner from '../Spinner';
@@ -38,7 +38,7 @@ const ViewContact = () => {
                   {Object.keys(contact).length > 0 &&
                     <>
                       <div className="col-sm-3">
-                        <img src={contact.photo} alt={contact.fullname} className='rounded-2' />
+                        <img src={contact.photo} alt={contact.fullname} className='rounded-2 w-100' />
                       </div>
                       <div className="col-sm-9">
                         <ul className='list-group pe-2'>
@@ -66,6 +66,9 @@ const ViewContact = () => {
 
             </div>
           </div>
+        </div>
+        <div className="w-100 text-center">
+          <Link to="/contacts" className='btn' style={{backgroundColor: CYAN}}>بازگشت</Link>
         </div>
       </div>
     </div>
