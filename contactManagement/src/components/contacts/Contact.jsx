@@ -5,7 +5,7 @@ import { FaPencil } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 import { Link } from 'react-router-dom';
 
-const Contact = ({contact, confirmDelete}) => {
+const Contact = ({contact, deleteContact}) => {
   return (
     <div className='col-md-6'>
       <div className="card my-2" style={{ backgroundColor: CURRENTLINE }}>
@@ -30,7 +30,7 @@ const Contact = ({contact, confirmDelete}) => {
             <div className="col-sm-1 d-flex flex-column align-items-center">
               <Link to={`/contacts/${contact.id}`} className='btn my-1' style={{ backgroundColor: ORANGE }}><FaRegEye /></Link>
               <Link to={`/contacts/edit/${contact.id}`} className='btn my-1' style={{ backgroundColor: CYAN }}><FaPencil /></Link>
-              <button onClick={confirmDelete} className='btn my-1' style={{ backgroundColor: RED }}><MdDelete /></button>
+              <button onClick={deleteContact} className='btn my-1' style={{ backgroundColor: RED }}><MdDelete /></button>
             </div>
           </div>
         </div>

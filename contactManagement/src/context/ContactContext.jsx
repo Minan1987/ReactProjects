@@ -1,5 +1,4 @@
 import { createContext } from "react";
-import { deleteContact } from "../services/contactServices";
 export const ContactContext = createContext({
     loading: false,
     contact: {},
