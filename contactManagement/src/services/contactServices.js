@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const SERVER_URL = "http://localhost:9000"
+/* http://localhost:9000 */
+const SERVER_URL = "http://contactmanagement.graphicalweb.ir"
 
 export const getAllContacts = () => {
     const url = `${SERVER_URL}/contacts`
