@@ -1,7 +1,7 @@
 import axios from "axios";
 
-/* http://localhost:9000 */
-const SERVER_URL = "http://contactmanagement.graphicalweb.ir"
+/* https://react-projects-jh7l1i3u8-mina-nazaris-projects.vercel.app  */
+const SERVER_URL = "http://localhost:9000"
 
 export const getAllContacts = () => {
     const url = `${SERVER_URL}/contacts`
