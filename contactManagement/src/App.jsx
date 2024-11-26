@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { confirmAlert } from 'react-confirm-alert'
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom"
+import { Route, Routes, Navigate, useNavigate, useParams } from "react-router-dom"
 import { Navbar, Contacts, AddContact, EditContact, ViewContact } from './components'
-import { createContact, deleteContact, getAllContacts, getAllGroups, getGroup } from './services/contactServices'
+import { createContact, deleteContact, getAllContacts, getAllGroups, getContact, getGroup } from './services/contactServices'
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { ContactContext } from './context/ContactContext'
 
 const App = () => {
+
   const [loading, setLoading] = useState(false)
   const [contacts, setContacts] = useState([])
   const [filteredContacts, setFilteredContacts] = useState([])
   const [groups, setGroups] = useState([])
   const [contact, setContact] = useState({})
+  const [group, setGroup] = useState({})
   const [contactQuery, setContactQuery] = useState({ text: "" })
   const navigate = useNavigate();
 
@@ -32,6 +34,14 @@ const App = () => {
     }
     fetchData()
   }, [])
+
+  const getContactById = (contactId) => {
+    return contacts.find((contact) => contact.id === parseInt(contactId))
+  }
+
+  const getGroupById = (groupId) => {
+    return groups.find((group) => group.id === groupId)
+  }
 
   const createContactForm = async (event) => {
     event.preventDefault()
@@ -109,12 +119,13 @@ const App = () => {
     <ContactContext.Provider value={{
       loading,
       setLoading,
-      contact,
       setContact,
       contacts,
       filteredContacts,
       contactQuery,
       groups,
+      getContactById,
+      getGroupById,
       onContactChange,
       deleteContact: confirmDelete,
       createContact: createContactForm,

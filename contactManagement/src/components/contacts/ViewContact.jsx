@@ -1,31 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { ContactContext } from '../../context/ContactContext';
 import { CURRENTLINE, CYAN } from "../../helpers/colors";
 import { Link, useParams } from 'react-router-dom';
-import { getContact, getGroup } from '../../services/contactServices';
+// import { getContact, getGroup } from '../../services/contactServices';
 import Spinner from '../Spinner';
 
 const ViewContact = () => {
   const { contactId } = useParams()
-  const [state, setState] = useState({
-    loading: false,
-    contact: {},
-    group: {}
-  })
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setState({ ...state, loading: true })
-        const { data: contactData } = await getContact(contactId)
-        const { data: groupData } = await getGroup(contactData.group)
-        setState({ ...state, loading: false, contact: contactData, group: groupData })
-      } catch (err) {
-        console.log(err)
-        setState({ ...state, loading: false })
-      }
-    }
-    fetchData()
-  }, [])
-  const { loading, group, contact } = state
+  const { loading, getContactById, getGroupById } = useContext(ContactContext)
+  const contact = getContactById(contactId)
+  const group = contact ? getGroupById(contact.group) : null
+  
+  // const [state, setState] = useState({
+  //   contact: {},
+  //   group: {}
+  // })
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       setLoading(false)
+  //       const { data: contactData } = await getContact(contactId)
+  //       const { data: groupData } = await getGroup(contactData.group)
+  //       setLoading(true)
+  //       setState({ ...state , contact: contactData, group: groupData })
+  //     } catch (err) {
+  //       console.log(err)
+  //       setLoading(false)
+  //     }
+  //   }
+  //   fetchData()
+  // }, [])
+
+  // const { contact, group } = state
+
   return (
     <div className='row justify-content-center'>
       <div className="col-md-8 ">
@@ -55,7 +63,7 @@ const ViewContact = () => {
                             شغل: {" "} <span className='fw-bold'>{contact.job}</span>
                           </li>
                           <li className='list-group-item list-group-item-dark'>
-                            گروه: {" "} <span className='fw-bold'>{contact.group}</span>
+                            گروه: {" "} {group? <span className='fw-bold'>{contact.group}</span>: "نامشخص"}
                           </li>
                         </ul>
                       </div>
@@ -68,7 +76,7 @@ const ViewContact = () => {
           </div>
         </div>
         <div className="w-100 text-center">
-          <Link to="/contacts" className='btn' style={{backgroundColor: CYAN}}>بازگشت</Link>
+          <Link to="/contacts" className='btn' style={{ backgroundColor: CYAN }}>بازگشت</Link>
         </div>
       </div>
     </div>
