@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { confirmAlert } from 'react-confirm-alert'
 import { Route, Routes, Navigate, useNavigate, useParams } from "react-router-dom"
 import { Navbar, Contacts, AddContact, EditContact, ViewContact } from './components'
-import { createContact, deleteContact, getAllContacts, getAllGroups, getContact, getGroup } from './services/contactServices'
+import { createContact, deleteContact, getAllContacts, getAllGroups, getContact, getGroup, updateContact } from './services/contactServices'
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { ContactContext } from './context/ContactContext'
 
@@ -15,6 +15,7 @@ const App = () => {
   const [contact, setContact] = useState({})
   const [group, setGroup] = useState({})
   const [contactQuery, setContactQuery] = useState({ text: "" })
+  const [editableContact, setEditableContact] = useState({})
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,6 +44,38 @@ const App = () => {
     return groups.find((group) => group.id === groupId)
   }
 
+  const fetchContactForEdit = async (contactId) => {
+    try {
+      setLoading(true)
+      const { data: contactData } = await getContact(contactId)
+      setEditableContact(contactData)
+      setLoading(false)
+    } catch (err) {
+      console.log(err.message)
+      setLoading(false)
+    }
+  }
+
+  const editContactForm = async (event, contactId) => {
+    event.preventDefault();
+    try {
+      setLoading(true);
+      const { data } = await updateContact(editableContact, contactId);
+      setLoading(false);
+      if (data) {
+        const updatedContacts = contacts.map((contact) =>
+          contact.id === parseInt(contactId) ? data : contact
+        );
+        setContacts(updatedContacts);
+        setFilteredContacts(updatedContacts);
+        navigate("/contacts");
+      }
+    } catch (err) {
+      console.log(err.message);
+      setLoading(false);
+    }
+  }
+
   const createContactForm = async (event) => {
     event.preventDefault()
     try {
@@ -63,10 +96,14 @@ const App = () => {
     }
   }
 
+  const onContactChangeEdit = (event) => {
+    setEditableContact({ ...editableContact, [event.target.name]: event.target.value })
+  }
+
   const onContactChange = (event) => {
     setContact({ ...contact, [event.target.name]: event.target.value })
   }
-
+  
   const confirmDelete = (contactId, contactFullname) => {
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -119,7 +156,7 @@ const App = () => {
     <ContactContext.Provider value={{
       loading,
       setLoading,
-      setContact,
+      contact,
       contacts,
       filteredContacts,
       contactQuery,
@@ -129,7 +166,11 @@ const App = () => {
       onContactChange,
       deleteContact: confirmDelete,
       createContact: createContactForm,
-      searchContact
+      searchContact,
+      fetchContactForEdit,
+      editableContact,
+      onContactChangeEdit,
+      editContactForm,
     }}>
       <div className='app'>
         <Navbar />

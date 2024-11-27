@@ -1,60 +1,71 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { getContact, getAllGroups, updateContact } from '../../services/contactServices';
+import React, { useEffect, useState, useContext } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import { ContactContext } from '../../context/ContactContext';
+// import { getContact, getAllGroups, updateContact } from '../../services/contactServices';
 import Spinner from '../Spinner';
 import img from "../../../public/images/add-contact-img.png"
+import Contacts from './Contacts';
 
-const EditContact = ({forceRender, setForceRender}) => {
+const EditContact = () => {
   const { contactId } = useParams()
   const navigate = useNavigate()
-  const [state, setState] = useState({
-    loading: false,
-    contact: {
-      fullname: "",
-      photo: "",
-      mobile: "",
-      email: "",
-      job: "",
-      group: ""
-    },
-    groups: [],
-  })
+  const {
+    loading,
+    setLoading,
+    fetchContactForEdit,
+    editableContact,
+    onContactChangeEdit,
+    editContactForm,
+    groups,
+  } = useContext(ContactContext);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setState({ ...state, loading: true })
-        const { data: contactData } = await getContact(contactId)
-        const { data: groupsData } = await getAllGroups()
-        setState({ ...state, loading: false, contact: contactData, groups: groupsData })
-      } catch (err) {
-        console.log(err)
-        setState({ ...state, loading: false })
-      }
-    }
-    fetchData()
-  }, [])
-  const { loading, contact, groups } = state;
+    fetchContactForEdit(contactId);
+  }, [contactId]);
 
-  const setEditContactInfo = (event) => {
-    setState({ ...state, contact: { ...state.contact, [event.target.name]: [event.target.value] } })
-  } 
+  // const [contact, setContact] = useState({})
 
-  const editContactForm = async (event) => {
-    event.preventDefault()
-    try {
-      setState({ ...state, loading: true })
-      const { data } = await updateContact(state.contact, contactId)
-      setState({ ...state, loading: false });
-      if (data) {
-        setForceRender(!forceRender)
-        navigate("/contacts")
-      }
-    } catch (err) {
-      console.log(err)
-      setState({ ...state, loading: false })
-    }
-  }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       loading(true)
+  //       const { data: contactData } = await getContact(contactId)
+  //       loading(false)
+  //       setContact(contactData)
+  //     } catch (err) {
+  //       console.log(err)
+  //       loading(false)
+  //     }
+  //   }
+  //   fetchData()
+  // }, [])
+
+
+  // const onContactChangeEdit = (event) => {
+  //   setContact({ ...contact,  [event.target.name]: event.target.value  })
+  // }
+
+  // const editContactForm = async (event) => {
+  //   event.preventDefault()
+  //   try {
+  //     loading(true)
+  //     const { data, status } = await updateContact(contact, contactId)
+
+  //     if (data) {
+  //       setLoadind(false)
+  //       const allContacts = [...Contacts]
+  //       const contactIndex=allContacts.findIndex((c)=> c.id ===parseInt(contactId))
+  //       allContacts[contactIndex]= {...data}
+
+  //       setContacts(allContacts)
+  //       setFilteredContact(allContacts)
+  //       navigate("/contacts")
+  //     }
+  //   } catch (err) {
+  //     console.log(err)
+  //     loading(false)
+  //   }
+  // }
 
 
   return (
@@ -64,59 +75,58 @@ const EditContact = ({forceRender, setForceRender}) => {
           <div className='container'>
             <div className="row">
               <div className="col-md-6">
-                <form onSubmit={editContactForm} className='form-group my-5'>
-                <input
-                        name="fullname"
-                        type="text"
-                        className="form-control"
-                        value={contact.fullname}
-                        onChange={setEditContactInfo}
-                        required={true}
-                        placeholder="نام و نام خانوادگی"
-                      />
+                <form onSubmit={(event) => editContactForm(event, contactId)} className='form-group my-5'>
+                  <input
+                    name="fullname"
+                    type="text"
+                    className="form-control"
+                    value={editableContact.fullname}
+                    onChange={onContactChangeEdit}
+                    required={true}
+                    placeholder="نام و نام خانوادگی"
+                  />
                   <input className='form-control mt-2'
                     type='text'
                     name='photo'
-                    value={contact.photo}
-                    onChange={setEditContactInfo}
+                    value={editableContact.photo}
+                    onChange={onContactChangeEdit}
                     required={true}
                   />
                   <input className="form-control mt-2"
                     placeholder='موبایل'
                     type="text"
                     name='mobile'
-                    value={contact.mobile}
-                    onChange={setEditContactInfo}
+                    value={editableContact.mobile}
+                    onChange={onContactChangeEdit}
                     required={true}
                   />
                   <input className="form-control mt-2"
                     placeholder='ایمیل'
                     type="email"
                     name='email'
-                    value={contact.email}
-                    onChange={setEditContactInfo}
+                    value={editableContact.email}
+                    onChange={onContactChangeEdit}
                     required={true}
                   />
                   <input className="form-control mt-2"
                     placeholder='شغل'
                     type="text"
                     name='job'
-                    value={contact.job}
-                    onChange={setEditContactInfo}
+                    value={editableContact.job}
+                    onChange={onContactChangeEdit}
                     required={true}
                   />
                   <select className='form-control mt-2'
                     name='group'
-                    value={contact.group}
-                    onChange={setEditContactInfo}
+                    value={editableContact.group}
+                    onChange={onContactChangeEdit}
                     required={true}
                   >
                     <option>انتخاب گروه</option>
                     {
                       groups.length > 0 && groups.map((group) => (
                         <option key={group.id} value={group.id}>{group.name}</option>
-                      )
-                      )
+                      ))
                     }
                   </select>
                   <div className='mt-3 d-flex justify-content-between'>
@@ -124,7 +134,13 @@ const EditContact = ({forceRender, setForceRender}) => {
                       type='submit'
                       value="ویرایش مخاطب"
                     />
-                    <Link to="/contacts" className="btn btn-secondary">انصراف</Link>
+                    <button
+                      type="button"
+                      className="btn btn-secondary mx-2"
+                      onClick={() => navigate("/contacts")}
+                    >
+                      بازگشت
+                    </button>
                   </div>
                 </form>
 

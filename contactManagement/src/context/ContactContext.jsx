@@ -5,6 +5,7 @@ export const ContactContext = createContext({
     contact: {},
     setContact: () => { }, contacts: [],
     filteredContacts: () => { },
+    editableContact: {},
     contactQuery: {},
     group: {},
     groups: [],
@@ -14,5 +15,8 @@ export const ContactContext = createContext({
     deleteContact: () => { },
     updateContact: () => { },
     createContact: () => { },
-    searchContact: () => { }
+    searchContact: () => { },
+    editContactForm: () => {},
+    onContactChangeEdit:() =>{},
+    fetchContactForEdit: () => { }
 })

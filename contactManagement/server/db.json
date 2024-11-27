@@ -1,12 +1,16 @@
 {
   "contacts": [
     {
-      "fullname": "مهران عزیزی",
+      "fullname": "مهران گرجی",
       "photo": "https://placehold.co/200x200",
-      "mobile": "09128865432",
+      "mobile": [
+        "09128865436"
+      ],
       "email": "mehran.azizi@gmail.com",
       "job": "مهندس عمران",
-      "group": "3",
+      "group": [
+        "2"
+      ],
       "id": 3
     },
     {
